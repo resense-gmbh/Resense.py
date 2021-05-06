@@ -16,5 +16,4 @@ if __name__ == '__main__':
     # Write the recording to a binary file. All exported file types
     # can be imported by FTE. Supported file types are:
     # bin, dat (binary), csv, pkl (pickle), json
-    resense.export_recording_to_file(recording, 'C:/Project/recording.bin')
     resense.export_recording_to_file(recording, 'C:/Project/recording.csv')
