@@ -62,6 +62,15 @@ def _import_recording_from_bin(file_path: str) -> BufferedRecording:
 
 
 def import_recording_from_file(file_path: str, file_extension: str = None) -> BufferedRecording:
+    """
+    Imports the recording from the specified file path. If file_extension is None, the file type will be detected
+    from the file path. If file_extension is specified, it will determine the file format which will be attempted to
+    read. If the file type is not supported, an Exception will be raised. Supported file types are bin, dat (binary),
+    json, csv, pkl (pickle). This function is compatible with the recording files exported from FTE.
+    :param file_path: The file to read from
+    :param file_extension: The file type. Default is None
+    :return: A BufferedRecording
+    """
     file_extension = _validate_name_and_extension(file_path, file_extension)
 
     if file_extension == 'csv':
