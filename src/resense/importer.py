@@ -46,13 +46,15 @@ def _import_recording_from_bin(file_path: str) -> BufferedRecording:
     with open(file_path, 'rb') as file_input:
         dataset_count = int.from_bytes(file_input.read(4), byteorder='big', signed=True)
         has_temperature = dataset_count < 0
+        if dataset_count < 0:
+            dataset_count = -dataset_count
         dataset_float_count = 7 if has_temperature else 6
         data_store_temp = []
         floats = [0] * 8
         for i in range(0, dataset_count):
             time_stamp = int.from_bytes(file_input.read(8), byteorder='big', signed=True)
             for j in range(0, dataset_float_count):
-                floats[j] = struct.unpack('>f', file_input.read(4))[0]
+                floats[j] = struct.unpack('<f', file_input.read(4))[0]
             data_store_temp.append(DataSet(time_stamp,
                                            ForceValue(floats[0], floats[1], floats[2]),
                                            TorqueValue(floats[3], floats[4], floats[5])
