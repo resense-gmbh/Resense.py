@@ -213,7 +213,7 @@ class BufferedRecording:
         elif variable is Variable.FORCE:
             return np.array([[point.force.data_point, point.force.y, point.force.z] for point in self.data_points])
 
-    def get_data_points(self, start = 0, end = None) -> np.ndarray:
+    def get_data_points(self, start=0, end=None) -> np.ndarray:
         """
         Returns a 1D numpy array of all data points.
         :param start: Start offset
@@ -223,6 +223,56 @@ class BufferedRecording:
         if end is None:
             end = self.get_data_point_count()
         return np.array(self.data_points[start:end])
+
+    def get_data_point_indices_for_time_frame(self, start_time: float, end_time: float) -> tuple:
+        """
+        Returns a tuple of two indices. The first index represents the first data point in this recording whose
+        timestamp is at least start_time after the timestamp of the first data point. The second index represents
+        the last data point in this recording whose timestamp is at most end_time after the timestamp of the first
+        data point. Both time intervals are specified in seconds. If any index or time offset is out of this
+        recordings bounds, (-1,-1) is returned.
+        :param start_time: Start time offset
+        :param end_time: End time offset
+        :return: The time frame converted to indices
+        """
+        if self.get_data_point_count() == 0:
+            return -1, -1
+
+        recording_start_time = self.data_points[0].time_offset
+        recording_frequency = self.get_average_frequency()
+        data_point_count = self.get_data_point_count()
+
+        # convert values to microseconds for easy comparison
+        start_time_us = 1000000 * start_time + recording_start_time
+        end_time_us = 1000000 * end_time + recording_start_time
+
+        # guess the start index and then iterate over data points until the correct data point is found
+        start_index = int(start_time * recording_frequency)
+        if start_index < 0 or start_index >= data_point_count:
+            return -1, -1
+        while self.data_points[start_index].time_offset > start_time_us:
+            start_index -= 1
+            if start_index < 0:
+                return -1, -1
+        while self.data_points[start_index].time_offset < start_time_us:
+            start_index += 1
+            if start_index >= data_point_count:
+                return -1, -1
+
+        # guess the end index and then iterate over data points until the correct data point is found
+        end_index = int(end_time * recording_frequency)
+        if end_index < 0 or end_index >= data_point_count:
+            return -1, -1
+        while self.data_points[end_index].time_offset < end_time_us:
+            end_index += 1
+            if end_index >= data_point_count:
+                return -1, -1
+        while self.data_points[end_index].time_offset > end_time_us:
+            end_index -= 1
+            if end_index < 0:
+                return -1, -1
+
+        return start_index, end_index
 
     def save(self, file: str):
         with open(file, 'wb') as file_output:
