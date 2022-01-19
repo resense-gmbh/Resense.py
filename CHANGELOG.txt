@@ -1,0 +1,7 @@
+v0.0.2  -  19 January 2022:
+  * 'import resensepy' no longer imports all submodules
+  * Sensor and visualizer submodules need to be imported seperately
+  + Added dependencies to setup.py
+
+v0.0.1  -  17 August 2021:
+  * Initial release
