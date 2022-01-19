@@ -9,5 +9,10 @@ setup(
     license='GPL-2.0',
     author='WittensteinSE',
     author_email='elias.hoerner@wittenstein.de',
-    description='Python library for interfacing with the WITTENSTEIN HEX force/torque sensors'
+    description='Python library for interfacing with the WITTENSTEIN HEX force/torque sensors',
+    install_requires=[
+        'numpy',
+        'pyserial',
+        'matplotlib'
+    ],
 )
