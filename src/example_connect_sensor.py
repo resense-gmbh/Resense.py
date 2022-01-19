@@ -1,8 +1,10 @@
 import resense
+from resense import sensor
+from resense import visualizer
 
 if __name__ == '__main__':
     # Connect to sensor electronics at port COM3
-    sensor = resense.HEXSensor('COM10')
+    sensor = sensor.HEXSensor('COM10')
     sensor.connect()
 
     # Record 2 seconds of F/T data. The sample rate specified must be the
@@ -11,7 +13,7 @@ if __name__ == '__main__':
     recording = sensor.record_duration(duration=2.0, sample_rate=1000)
 
     # Display a force plot
-    resense.display_force_plot(recording)
+    visualizer.display_force_plot(recording)
 
     # Write the recording to a binary file. All exported file types
     # can be imported by FTE. Supported file types are:
