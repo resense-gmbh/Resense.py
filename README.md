@@ -22,7 +22,7 @@ The library consists of five submodules. The following three are imported by def
 
 The following modules have to be imported manually:
 
-- `from resensepy import sensor`: Connect to an electronisc box using USB and record the incoming F/T-data
+- `from resensepy import sensor`: Connect to an electronics box using USB and record the incoming F/T-data
 - `from resensepy import visualizer`: Display recordings as basic force/torque plots using matplotlib and pyplot
 
 ## License notice
