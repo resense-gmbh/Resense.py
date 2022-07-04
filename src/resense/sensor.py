@@ -14,7 +14,7 @@ class CalibrationMatrix:
         Otherwise, an identity matrix will be created.
         :param file_path: File to read from, default None
         """
-        self.matrix = np.empty((6, 6))
+        self.matrix = np.zeros((6, 6))
         if file_path is None:
             for column in range(0, 6):
                 self.matrix[column][column] = 1

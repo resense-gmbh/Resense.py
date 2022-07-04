@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='resensepy',
-    version='0.0.2',
+    version='0.0.3',
     packages=['resensepy'],
     package_dir={'resensepy': 'src/resense'},
     url='http://resense.io/',
