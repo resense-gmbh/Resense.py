@@ -1,3 +1,7 @@
+v0.0.3  -  04 July 2022:
+  * Fixed bug that would cause F/T values to be corrupted when
+    no software calibration matrix is defined explicitly
+
 v0.0.2  -  19 January 2022:
   * 'import resensepy' no longer imports all submodules
   * Sensor and visualizer submodules need to be imported seperately
